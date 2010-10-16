@@ -1,4 +1,3 @@
-(:xdmp:document-insert("1.xml", <foo/>):)
 
 declare function local:create-entry ($user as xs:string, $description as xs:string){
 element item {
@@ -9,29 +8,27 @@ element item {
 };
 
 declare function local:list-entries($user as xs:string){
-element items {
-    element item {'TODO'}
-}
+    doc(local:get-current-doc-uri($user))
 };
 
 declare function local:list-entries-by-date($user as xs:string, $date as xs:date){
 
 };
 
-declare function local:get-current-doc-uri() as xs:string{
-    fn:concat(current-date(),".xml")
+declare function local:get-current-doc-uri($user as xs:string) as xs:string{
+    fn:concat("/",$user,"/",current-date(),".xml")
 };
 
 
 declare function local:insert($user){
-if (exists(doc(local:get-current-doc-uri()))) then (
+if (exists(doc(local:get-current-doc-uri($user)))) then (
     xdmp:node-insert-after( 
-        doc(local:get-current-doc-uri())/items/item[position() = last()],
+        doc(local:get-current-doc-uri($user))/items/item[position() = last()],
         local:create-entry ($user, "test")
     )
 ) else (
 xdmp:document-insert(
-    local:get-current-doc-uri(),
+    local:get-current-doc-uri($user),
     element items {
         local:create-entry ($user, "test")
     },
@@ -40,5 +37,5 @@ xdmp:document-insert(
 )  
 )
 };
-
-local:insert("test")
+local:list-entries("alex")
+(:local:insert("test") :)
