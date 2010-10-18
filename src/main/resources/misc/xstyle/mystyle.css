@@ -1,0 +1,27 @@
+* {
+	font-family: "Courier New", monospace;
+	font-size: 16px;
+}
+
+span.element {
+	position: relative;
+
+	clear: both;
+	display: block;
+
+	color: red;
+}
+
+span.element span.element{
+	margin-left: 20px;
+}
+
+span.attribute-name {
+	color: green;
+}
+span.attribute-value {
+	color: blue;
+}
+span.text {
+	color: black;
+}
