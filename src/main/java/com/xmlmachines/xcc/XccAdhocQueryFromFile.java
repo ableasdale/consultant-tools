@@ -32,7 +32,7 @@ public class XccAdhocQueryFromFile {
 					.newContentSource(uri);
 			Session session = contentSource.newSession();
 			Request request = session
-					.newAdhocQuery(readFile("src/main/resources/example.xqy"));
+					.newAdhocQuery(readFile("src/main/resources/modules/example/external-xcc-example.xqy"));
 
 			request.setNewIntegerVariable("START", 1);
 			request.setNewIntegerVariable("END", 10);

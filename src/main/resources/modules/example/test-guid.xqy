@@ -1,6 +1,6 @@
 xquery version "1.0-ml";
 
-import module namespace uuid = "http://www.xmlmachines.com/uuid" at "/lib-uuid.xqy";
+import module namespace uuid = "http://www.xmlmachines.com/uuid" at "/xmlmachines/lib-uuid.xqy";
 
 element guids {
 for $x in 1 to 50
