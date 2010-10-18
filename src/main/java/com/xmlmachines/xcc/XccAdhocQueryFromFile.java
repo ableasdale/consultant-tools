@@ -8,7 +8,11 @@ import java.net.URISyntaxException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -27,7 +31,10 @@ public class XccAdhocQueryFromFile {
 		Log LOG = LogFactory.getLog(XccAdhocQueryFromFile.class);
 
 		try {
-			URI uri = new URI("xcc://admin:admin@localhost:8003/nyt");
+			XMLConfiguration config = new XMLConfiguration("xml/config/xcc.xml");
+			List<String> servers = (Arrays.asList(config
+					.getStringArray("uris.uri")));
+			URI uri = new URI(servers.get(0));
 			ContentSource contentSource = ContentSourceFactory
 					.newContentSource(uri);
 			Session session = contentSource.newSession();
@@ -48,6 +55,8 @@ public class XccAdhocQueryFromFile {
 		} catch (IOException e) {
 			LOG.error(e);
 		} catch (RequestException e) {
+			LOG.error(e);
+		} catch (ConfigurationException e) {
 			LOG.error(e);
 		}
 	}

@@ -4,9 +4,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -37,7 +40,11 @@ public class XccStreamedSession {
 		List<String> xmlStringList = new ArrayList<String>();
 
 		try {
-			URI uri = new URI("xcc://admin:admin@localhost:8003/nyt");
+			XMLConfiguration config = new XMLConfiguration("xml/config/xcc.xml");
+
+			List<String> servers = (Arrays.asList(config
+					.getStringArray("uris.uri")));
+			URI uri = new URI(servers.get(0));
 			ContentSource contentSource = ContentSourceFactory
 					.newContentSource(uri);
 			Session s = contentSource.newSession();
@@ -51,9 +58,7 @@ public class XccStreamedSession {
 			while (rs.hasNext()) {
 				xmlStringList.add(rs.next().asString());
 			}
-
 			s.close();
-
 			LOG.info(MessageFormat.format("Received {0} records",
 					xmlStringList.size()));
 
@@ -62,6 +67,8 @@ public class XccStreamedSession {
 		} catch (RequestException e) {
 			LOG.error(e);
 		} catch (XccConfigException e) {
+			LOG.error(e);
+		} catch (ConfigurationException e) {
 			LOG.error(e);
 		}
 	}
