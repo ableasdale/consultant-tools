@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<xs:element name="taskItem">
+		<xs:annotation>
+			<xs:documentation>XML Schema for a workslate task item
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="project" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="task" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="stakeholder" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="assignee" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="status" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="estimate" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="due-dateTime" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="comments" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="workflows" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="id" type="xs:int" />
+	<xs:element name="project" type="xs:string" />
+	<xs:element name="task" type="xs:string" />
+	<xs:element name="stakeholder" type="xs:string" />
+	<xs:element name="assignee" type="xs:string" />
+	<xs:element name="status" type="xs:string" />
+	<xs:element name="estimate" type="xs:duration" />
+	<xs:element name="due-dateTime" type="xs:dateTime" />
+	<xs:element name="comments" type="xs:string" />
+	<xs:element name="workflows">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="workflow" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="workflow">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dateTime" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="event" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dateTime" type="xs:dateTime" />
+	<xs:element name="event" type="xs:string" />
+</xs:schema>
