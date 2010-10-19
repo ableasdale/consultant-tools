@@ -1,0 +1,335 @@
+; TextPad syntax definitions for XSD (XML Schema)
+; http://www.w3.org/XML/Schema.html
+; Based on W3C Recommendation 2 May 2001
+; 
+; Created by Scott Hollenbeck <shollenbeck@verisign.com>
+
+HTML=1
+
+[Syntax]
+Namespace1 = 1
+IgnoreCase = No
+KeyWordLength = 0
+BracketChars = {[()]}
+OperatorChars = =:
+PreprocStart =
+HexPrefix = #
+SyntaxStart = <
+SyntaxEnd = >
+CommentStart = !--
+CommentEnd = -->
+CommentStartAlt =
+CommentEndAlt =
+SingleComment =
+SingleCommentCol =
+SingleCommentAlt =
+SingleCommentColAlt =
+SingleCommentEsc =
+StringsSpanLines = Yes
+StringStart =
+StringEnd =
+StringAlt =
+StringEsc =
+CharStart = &
+CharEnd = ;
+CharEsc =
+
+[Keywords 1]
+; Unqualified element declarations
+all
+annotation
+any
+anyAttribute
+appinfo
+attribute
+attributeGroup
+choice
+complexContent
+complexType
+documentation
+element
+extension
+group
+import
+include
+key
+keyref
+list
+notation
+redefine
+restriction
+xsd:schema
+schema
+sequence
+simpleContent
+simpleType
+union
+unique
+
+; Qualified element declarations
+xsd:all
+xsd:annotation
+xsd:any
+xsd:anyAttribute
+xsd:appinfo
+xsd:attribute
+xsd:attributeGroup
+xsd:choice
+xsd:complexContent
+xsd:complexType
+xsd:documentation
+xsd:element
+xsd:extension
+xsd:group
+xsd:import
+xsd:include
+xsd:key
+xsd:keyref
+xsd:list
+xsd:notation
+xsd:redefine
+xsd:restriction
+xsd:schema
+xsd:sequence
+xsd:simpleContent
+xsd:simpleType
+xsd:union
+xsd:unique
+
+[Keywords 2]
+; Unqualified attributes
+abstract
+attributeFormDefault
+base
+block
+blockDefault
+default
+elementFormDefault
+field
+final
+finalDefault
+fixed
+form
+id
+itemType
+maxOccurs
+memberTypes
+minOccurs
+mixed
+name
+namespace
+nil
+nillable
+noNamespaceSchemaLocation
+processContents
+public
+ref
+schemaLocation
+selector
+source
+substitutionGroup
+system
+targetNamespace
+type
+use
+value
+xmlns:xsi
+xpath
+
+; Qualified attributes
+xsd:abstract
+xsd:attributeFormDefault
+xsd:base
+xsd:block
+xsd:blockDefault
+xsd:default
+xsd:elementFormDefault
+xsd:field
+xsd:final
+xsd:finalDefault
+xsd:fixed
+xsd:form
+xsd:id
+xsd:itemType
+xsd:maxOccurs
+xsd:memberTypes
+xsd:minOccurs
+xsd:mixed
+xsd:name
+xsd:namespace
+xsd:nillable
+xsd:processContents
+xsd:public
+xsd:ref
+xsd:selector
+xsd:source
+xsd:substitutionGroup
+xsd:system
+xsd:targetNamespace
+xsd:type
+xsd:use
+xsd:value
+xsd:version
+xsd:xpath
+xsi:nil
+xsi:noNamespaceSchemaLocation
+xsi:schemaLocation
+xsi:type
+
+; Unqualified constraining facets
+enumeration
+fractionDigits
+length
+maxExclusive
+maxInclusive
+maxLength
+minExclusive
+minInclusive
+minLength
+pattern
+totalDigits
+whiteSpace
+
+; Qualified constraining facets
+xsd:enumeration
+xsd:fractionDigits
+xsd:length
+xsd:maxExclusive
+xsd:maxInclusive
+xsd:maxLength
+xsd:minExclusive
+xsd:minInclusive
+xsd:minLength
+xsd:pattern
+xsd:totalDigits
+xsd:whiteSpace
+
+[Keywords 3]
+; Unqualified primitive datatypes
+NOTATION
+QName
+anyURI
+base64Binary
+boolean
+date
+dateTime
+decimal
+double
+duration
+float
+gDay
+gMonth
+gYear
+gYearMonth
+hexBinary
+string
+time
+
+; Qualified primitive datatypes
+xsd:NOTATION
+xsd:QName
+xsd:anyURI
+xsd:base64Binary
+xsd:boolean
+xsd:date
+xsd:dateTime
+xsd:decimal
+xsd:double
+xsd:duration
+xsd:float
+xsd:gDay
+xsd:gMonth
+xsd:gYear
+xsd:gYearMonth
+xsd:hexBinary
+xsd:string
+xsd:time
+
+; Unqualified derived datatypes
+ENTITIES
+ENTITY
+ID
+IDREF
+IDREFS
+NCName
+NMTOKEN
+NMTOKENS
+Name
+byte
+int
+integer
+language
+long
+negativeInteger
+nonNegativeInteger
+nonPositiveInteger
+normalizedString
+positiveInteger
+short
+token
+unsignedByte
+unsignedInt
+unsignedLong
+unsignedShort
+
+; Qualified derived datatypes
+xsd:ENTITIES
+xsd:ENTITY
+xsd:ID
+xsd:IDREF
+xsd:IDREFS
+xsd:NCName
+xsd:NMTOKEN
+xsd:NMTOKENS
+xsd:Name
+xsd:byte
+xsd:int
+xsd:integer
+xsd:language
+xsd:long
+xsd:negativeInteger
+xsd:nonNegativeInteger
+xsd:nonPositiveInteger
+xsd:normalizedString
+xsd:positiveInteger
+xsd:short
+xsd:token
+xsd:unsignedByte
+xsd:unsignedInt
+xsd:unsignedLong
+xsd:unsignedShort
+
+[Keywords 4]
+; Defined attribute values
+##any
+##local
+##other
+##targetNamespace
+false
+lax
+optional
+prohibited
+qualified
+required
+skip
+strict
+true
+unbounded
+unqualified
+
+[Keywords 5]
+; XML attributes
+encoding
+standalone
+version
+xml:lang
+xmlns
+
+[Keywords 6]
+; XML attribute values
+no
+yes
+en
+en-US
+UTF-8
+utf-8
