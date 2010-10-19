@@ -35,6 +35,7 @@ while [ $TIME -gt 0 ]; do
 	/etc/init.d/MarkLogic pmap >> /tmp/$TSTAMP/pmap.log	
 	#date >> /tmp/$TSTAMP/iostat.log
 	#iostat >> /tmp/$TSTAMP/iostat.log
+	# TODO - add sar to the logging?
 
 	#pstack summary routine
 	for s in ${PIDS[@]}; do
