@@ -33,6 +33,8 @@ while [ $TIME -gt 0 ]; do
 	/etc/init.d/MarkLogic pstack >> /tmp/$TSTAMP/pstack.log
 	date >> /tmp/$TSTAMP/pmap.log
 	/etc/init.d/MarkLogic pmap >> /tmp/$TSTAMP/pmap.log	
+	#date >> /tmp/$TSTAMP/iostat.log
+	#iostat >> /tmp/$TSTAMP/iostat.log
 
 	#pstack summary routine
 	for s in ${PIDS[@]}; do
