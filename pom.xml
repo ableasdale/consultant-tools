@@ -13,6 +13,16 @@
 			<id>MarkLogic</id>
 			<url>http://developer.marklogic.com/maven2</url>
 		</repository>
+		<repository>
+			<id>JBOSS</id>
+			<name>JBoss Repository</name>
+			<url>http://repository.jboss.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for maven</name>
+			<url>http://download.java.net/maven/2/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -20,6 +30,16 @@
 			<groupId>com.marklogic</groupId>
 			<artifactId>marklogic-xcc</artifactId>
 			<version>4.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-bundle</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -30,6 +50,16 @@
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>nux</groupId>
+			<artifactId>nux</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.saxon</groupId>
+			<artifactId>saxon</artifactId>
+			<version>9.1.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-configuration</groupId>
