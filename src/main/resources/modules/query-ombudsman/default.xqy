@@ -24,7 +24,7 @@ declare function local:request($request-status as element(ss:request-status)) as
 				<img src="images/Delete-icon.png" width="128" height="128" alt="Cancel this Query" />
 			</a>
 				{
-					if(fn:current-dateTime() - $request-status/ss:start-time gt xs:dayTimeDuration("PT40M")) then (
+					if(fn:current-dateTime() - $request-status/ss:start-time gt xs:dayTimeDuration("PT1M")) then (
 						<img src="images/zero-tolerance.jpg" width="237" height="178" style="clear:both;float:right" />,
 						<h3>Have zero tolerence for this Query</h3>	)
 					else ()
