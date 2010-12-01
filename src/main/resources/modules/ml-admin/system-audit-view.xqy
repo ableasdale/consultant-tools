@@ -74,12 +74,15 @@ if ($pos mod 2 = 0)
     else ("odd")
 };
 
+(xdmp:save("c:\Users\ableasdale\Desktop\user-report.xhtml",
 local:build-page(
 functx:change-element-ns-deep(
 local:html-page-enclosure(
 element div {attribute id {"content"},
+    element h1 {concat("All users and roles for ", count(doc()), " hosts")},
     for $doc in doc()
         return 
-        (element h2 {"Host: ", $doc/info/server-name/text()}, local:list-users($doc/info/user-info))
+        (element h2 {"Host: ", $doc/info/server-name/text(), fn:concat(" (last modified: ",
+xdmp:document-properties(xdmp:node-uri($doc))/prop:properties/prop:last-modified/text(), ")")}, local:list-users($doc/info/user-info))
     }
-), "http://www.w3.org/1999/xhtml", ""))
+), "http://www.w3.org/1999/xhtml", "")))
