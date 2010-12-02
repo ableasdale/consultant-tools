@@ -1,5 +1,12 @@
 xquery version "1.0-ml";
 
+(::
+
+COMMON XHTML CONTENT :: TODO - MOVE TO A SEPARATE MODULE 
+
+::)
+
+
 declare namespace xhtml = "http://www.w3.org/1999/xhtml";
 import module namespace functx = "http://www.functx.com" at "/MarkLogic/functx/functx-1.0-nodoc-2007-01.xqy";
 
@@ -37,42 +44,49 @@ table td.roles strong {color:#800;}
 .even {background-color:#e1e1e1;}"
 };
 
-declare function local:list-users($user-info-element as element(user-info)) as element(){
-element table {
-    attribute summary {fn:concat("A summary of the ",fn:count($user-info-element/user)," users and their assigned roles.")},
-    element thead {
-        element tr {
-            element th {"User Name"},
-            element th {"Description"},
-            element th {"Roles"}
-        }
-    },
-    element tbody {
-        for $user at $pos in $user-info-element/user
-        return
-        element tr {attribute class {local:get-tr-class($pos)},
-            element td {$user/sec:user-name/text()},
-            element td {$user/sec:description/text()},
-            element td {attribute class {"roles"}, 
-                for $role in $user/roles/sec:role-name
-                return fn:concat($role/text(), ", "),
-                element strong {fn:concat("Total: ",count($user/roles/role), " roles")}
-            }
-        }
-    },
-    element tfoot {
-        element tr {
-            element th {attribute colspan {"3"},fn:concat("Total accounts: ", fn:count($user-info-element/user))}
-        }
-    }
-}
-};
-
 declare function local:get-tr-class($pos as xs:integer) as xs:string{
 if ($pos mod 2 = 0) 
     then ("even") 
     else ("odd")
 };
+
+(:: END COMMON ::)
+
+
+
+
+
+declare function local:tabulate-roles($doc){
+ for $node in $doc/info/role-info
+ return local:tabulate-role($node)
+};
+
+declare function local:tabulate-role($role as element(role-info)){
+element table {attribute border {"1"},
+ element tr {
+   element th {"Role Name"},
+   element th {"Role description"},
+   element th {"Roles"}
+ },
+ for $list at $pos in $role/sec:role
+ return 
+ element tr {attribute class {local:get-tr-class($pos)},
+  element td {$list/sec:role-name/text()},
+  element td {$list/sec:description/text()},
+  element td {attribute class {"roles"}, local:process-role-ids($list/sec:role-ids), element strong {concat("Total: ",count($list/sec:role-ids/sec:role-id))}}
+}
+} 
+};
+
+declare function local:process-role-ids($list as element(sec:role-ids)){
+for $item in $list/sec:role-id
+return fn:concat(local:map-role-id-to-name($item), " | ")
+};
+
+declare function local:map-role-id-to-name($role-id){
+fn:root($role-id)/info/role-info/sec:role[sec:role-id = $role-id]/sec:role-name[1]/text()
+};
+
 
 
 local:build-page(
@@ -83,6 +97,6 @@ element div {attribute id {"content"},
     for $doc in doc()
         return 
         (element h2 {"Host: ", $doc/info/server-name/text(), fn:concat(" (last modified: ",
-xdmp:document-properties(xdmp:node-uri($doc))/prop:properties/prop:last-modified/text(), ")")}, local:list-users($doc/info/user-info))
+xdmp:document-properties(xdmp:node-uri($doc))/prop:properties/prop:last-modified/text(), ")")}, local:tabulate-roles($doc))
     }
 ), "http://www.w3.org/1999/xhtml", ""))
