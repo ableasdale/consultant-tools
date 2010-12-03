@@ -66,16 +66,23 @@ element table {attribute border {"1"},
  element tr {
    element th {"Role Name"},
    element th {"Role description"},
-   element th {"Roles"}
+   element th {"Roles"},
+   element th {"Permissions"}
  },
  for $list at $pos in $role/sec:role
  return 
  element tr {attribute class {local:get-tr-class($pos)},
   element td {$list/sec:role-name/text()},
   element td {$list/sec:description/text()},
-  element td {attribute class {"roles"}, local:process-role-ids($list/sec:role-ids), element strong {concat("Total: ",count($list/sec:role-ids/sec:role-id))}}
+  element td {attribute class {"roles"}, local:process-role-ids($list/sec:role-ids), element strong {concat("Total: ",count($list/sec:role-ids/sec:role-id))}},
+  element td {local:process-permissions($list/sec:permissions)}
 }
 } 
+};
+
+declare function local:process-permissions($list as element(sec:permissions)){
+  for $capability at $pos in $list/sec:permission/sec:capability
+  return fn:concat($capability/text(), ", "), element strong {concat("Total: "), count($list/sec:permission)}
 };
 
 declare function local:process-role-ids($list as element(sec:role-ids)){
