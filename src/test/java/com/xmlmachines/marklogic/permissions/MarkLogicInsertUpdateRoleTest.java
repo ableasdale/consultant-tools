@@ -47,7 +47,7 @@ public class MarkLogicInsertUpdateRoleTest {
 		try {
 			URI u = null;
 			// Create Read Only User
-			u = new URI(TestHelper.XCC_FULL_ACCESS_USER_LOCALHOST_8010);
+			u = new URI(TestHelper.XCC_FULL_ACCESS_USER_LOCALHOST_8020);
 			cs_ins_upd = ContentSourceFactory.newContentSource(u);
 		} catch (XccConfigException e) {
 			LOG.error(e);

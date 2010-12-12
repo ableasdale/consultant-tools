@@ -17,10 +17,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({
-		// The following TestCases compose this TestSuite
-		MarkLogicNoPermissionsRoleTest.class, MarkLogicAdminRoleTest.class,
-		MarkLogicExecuteReadRoleTest.class, MarkLogicInsertUpdateRoleTest.class })
+@SuiteClasses({ MarkLogicNoPermissionsRoleTest.class,
+		MarkLogicAdminRoleTest.class, MarkLogicExecuteReadRoleTest.class,
+		MarkLogicInsertUpdateRoleTest.class })
 public class MarkLogicRoleTestSuite {
 
 	private static Log LOG = LogFactory.getLog("MarkLogicRoleTestSuite");

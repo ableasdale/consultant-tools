@@ -58,7 +58,7 @@ public class MarkLogicExecuteReadRoleTest {
 		try {
 			URI u = null;
 			// Create Read Only User
-			u = new URI(TestHelper.XCC_EXECUTE_READ_USER_LOCALHOST_8010);
+			u = new URI(TestHelper.XCC_EXECUTE_READ_USER_LOCALHOST_8020);
 			cs_exe_read = ContentSourceFactory.newContentSource(u);
 		} catch (XccConfigException e) {
 			LOG.error(e);

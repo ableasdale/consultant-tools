@@ -26,12 +26,12 @@ import com.xmlmachines.utils.Utils;
 public class TestHelper {
 
 	private static Log LOG = LogFactory.getLog("TestHelper");
+	// TODO - refactor - external configuration?
+	public static String XCC_FULL_ACCESS_USER_LOCALHOST_8020 = "xcc://full-user:password@localhost:8020";
+	public static String XCC_EXECUTE_READ_USER_LOCALHOST_8020 = "xcc://execute-read-user:password@localhost:8020";
 
-	public static String XCC_FULL_ACCESS_USER_LOCALHOST_8010 = "xcc://full-user:password@localhost:8010";
-	public static String XCC_EXECUTE_READ_USER_LOCALHOST_8010 = "xcc://execute-read-user:password@localhost:8010";
-
-	public static String XCC_NOPERMS_USER_NOPERMS_PASS_LOCALHOST_8010 = "xcc://noperms_user:noperms_pass@localhost:8010";
-	public static String XCC_ADMIN_ADMIN_LOCALHOST_8010 = "xcc://admin:admin@localhost:8010";
+	public static String XCC_NOPERMS_USER_NOPERMS_PASS_LOCALHOST_8020 = "xcc://noperms_user:noperms_pass@localhost:8020";
+	public static String XCC_ADMIN_ADMIN_LOCALHOST_8020 = "xcc://admin:admin@localhost:8020";
 
 	public static String SIMPLE_EVAL_QUERY = "xdmp:eval(\"1+1\")";
 
@@ -68,7 +68,7 @@ public class TestHelper {
 		Session s = null;
 		try {
 			ContentSource cs = ContentSourceFactory.newContentSource(new URI(
-					XCC_ADMIN_ADMIN_LOCALHOST_8010));
+					XCC_ADMIN_ADMIN_LOCALHOST_8020));
 			s = cs.newSession();
 			Request r = s.newAdhocQuery(TestHelper.XDMP_DOC_ESTIMATE_QUERY);
 			ResultSequence rs = s.submitRequest(r);
@@ -109,7 +109,7 @@ public class TestHelper {
 		ContentSource cs;
 		try {
 			cs = ContentSourceFactory.newContentSource(new URI(
-					XCC_ADMIN_ADMIN_LOCALHOST_8010));
+					XCC_ADMIN_ADMIN_LOCALHOST_8020));
 			s = cs.newSession();
 			Request r = s.newAdhocQuery(adhocQuery);
 			s.submitRequest(r);

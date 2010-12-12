@@ -55,7 +55,7 @@ public class MarkLogicAdminRoleTest {
 	@BeforeClass
 	public static void setup() throws Exception {
 		// Create XCC ContentSource for Admin User
-		URI u = new URI(TestHelper.XCC_ADMIN_ADMIN_LOCALHOST_8010);
+		URI u = new URI(TestHelper.XCC_ADMIN_ADMIN_LOCALHOST_8020);
 		cs_adm = ContentSourceFactory.newContentSource(u);
 
 		// Clear DB at outset

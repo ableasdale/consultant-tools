@@ -1,0 +1,18 @@
+Before running the unit tests, you need to configure MarkLogic with one initial
+application server, from this, the Unit test scripts will be able to prepare all
+other databases, forests, Documents, indexes and Application Servers necessary for
+the CORB TestSuite.
+
+=======================================================
+The initial application server should be set up as such:
+=======================================================
+Port 			- 8020
+Database DB 	- your-test-db
+Modules DB		- Modules
+
+Please note that no updates should occur in either the Documents or Modules DBs; this application server is just configured to give enough access to create the necessary
+resources required by the test suite.
+
+================================================================================
+TODO - Create initial servers and add the no_user script:
+================================================================================
