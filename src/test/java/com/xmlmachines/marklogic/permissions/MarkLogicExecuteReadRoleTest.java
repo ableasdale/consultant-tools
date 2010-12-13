@@ -58,7 +58,7 @@ public class MarkLogicExecuteReadRoleTest {
 		try {
 			URI u = null;
 			// Create Read Only User
-			u = new URI(TestHelper.XCC_EXECUTE_READ_USER_LOCALHOST_8020);
+			u = new URI(TestHelper.XCC_EXECUTE_READ_USER_LOCALHOST);
 			cs_exe_read = ContentSourceFactory.newContentSource(u);
 		} catch (XccConfigException e) {
 			LOG.error(e);
@@ -139,10 +139,11 @@ public class MarkLogicExecuteReadRoleTest {
 
 		Document d = XMLUnit.buildControlDocument(rs.asString());
 		XMLAssert.assertXpathEvaluatesTo("read",
-				"/sec:permission/sec:capability/text()", d);
-		XMLAssert.assertXpathEvaluatesTo("1", "count(sec:permission)", d);
-		// Now add RO permissions to all remaining docs (200)
-		TestHelper.addReadPermissionsToRemainingDocsAsAdmin();
+				"properties/sec:permission/sec:capability/text()", d);
+		XMLAssert.assertXpathEvaluatesTo("1",
+				"count(properties/sec:permission)", d);
+		// Now add READ and UPDATE permissions to all remaining docs (200)
+		TestHelper.addRemainingPermissionsToRemainingDocsAsAdmin();
 		r = s.newAdhocQuery(TestHelper.XDMP_DOC_ESTIMATE_QUERY);
 		rs = s.submitRequest(r);
 		assertTrue(
@@ -151,6 +152,17 @@ public class MarkLogicExecuteReadRoleTest {
 		assertEquals(
 				"Assert that the read-only user can currently see ALL docs in the db",
 				"200", rs.asString());
+
+		// Now Check the permissions of the first document
+		r = s.newAdhocQuery(TestHelper.FIRST_DOC_IN_DB_PERMISSIONS_QUERY);
+		rs = s.submitRequest(r);
+		d = XMLUnit.buildControlDocument(rs.asString());
+		XMLAssert.assertXpathEvaluatesTo("read",
+				"properties/sec:permission[1]/sec:capability/text()", d);
+		XMLAssert.assertXpathEvaluatesTo("update",
+				"properties/sec:permission[2]/sec:capability/text()", d);
+		XMLAssert.assertXpathEvaluatesTo("2",
+				"count(properties/sec:permission)", d);
 		s.close();
 	}
 

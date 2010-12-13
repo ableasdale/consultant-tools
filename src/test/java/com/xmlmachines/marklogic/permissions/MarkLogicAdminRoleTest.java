@@ -55,7 +55,7 @@ public class MarkLogicAdminRoleTest {
 	@BeforeClass
 	public static void setup() throws Exception {
 		// Create XCC ContentSource for Admin User
-		URI u = new URI(TestHelper.XCC_ADMIN_ADMIN_LOCALHOST_8020);
+		URI u = new URI(TestHelper.XCC_ADMIN_ADMIN_LOCALHOST);
 		cs_adm = ContentSourceFactory.newContentSource(u);
 
 		// Clear DB at outset
@@ -112,10 +112,10 @@ public class MarkLogicAdminRoleTest {
 				.newAdhocQuery(TestHelper.FIRST_DOC_IN_DB_PERMISSIONS_QUERY);
 		ResultSequence rs = s.submitRequest(r);
 		assertTrue("Testing that a result did come back from the query",
-				rs.size() == 0);
+				rs.size() > 0);
 		assertEquals(
 				"Confirming an empty sequence (String) gets returned as no docs have permissions",
-				"", rs.asString());
+				"<properties/>", rs.asString());
 	}
 
 	@Test

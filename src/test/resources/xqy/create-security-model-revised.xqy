@@ -15,6 +15,10 @@ declare variable $EXECUTE-READ-ROLE-NAME as xs:string := "execute-read-role";
 declare variable $EXECUTE-READ-ROLE-DESCRIPTION as xs:string := "Database Execute/Read Role";
 
 (: Users :)
+declare variable $NO-PERMS-USER-NAME as xs:string := "no-perms";
+declare variable $NO-PERMS-USER-DESCRIPTION as xs:string := "No Permissions Test User";
+declare variable $NO-PERMS-USER-PASSWORD as xs:string := "password";
+
 declare variable $FULL-ACCESS-USER-NAME as xs:string := "full-user";
 declare variable $FULL-ACCESS-USER-DESCRIPTION as xs:string := "Database Full Access User";
 declare variable $FULL-ACCESS-USER-PASSWORD as xs:string := "password";
@@ -108,7 +112,16 @@ sec:create-user(
                 $EXECUTE-READ-ROLE-NAME,
                 (), (: permissions :)
                 () (: collections :)
-                )
+                ),
+                
+sec:create-user(
+                $NO-PERMS-USER-NAME, 
+                $NO-PERMS-USER-DESCRIPTION,
+                $NO-PERMS-USER-PASSWORD,
+                (), (: roles :)
+                (), (: permissions :)
+                () (: collections :)
+                )     
 };
 
 

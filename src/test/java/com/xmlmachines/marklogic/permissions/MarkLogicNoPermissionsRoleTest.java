@@ -41,7 +41,7 @@ public class MarkLogicNoPermissionsRoleTest {
 
 	@BeforeClass
 	public static void setup() throws Exception {
-		URI u = new URI(TestHelper.XCC_NOPERMS_USER_NOPERMS_PASS_LOCALHOST_8020);
+		URI u = new URI(TestHelper.XCC_NOPERMS_USER_NOPERMS_PASS_LOCALHOST);
 		cs_noperms = ContentSourceFactory.newContentSource(u);
 	}
 

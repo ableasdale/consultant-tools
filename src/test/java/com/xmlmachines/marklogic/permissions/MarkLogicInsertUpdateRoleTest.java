@@ -47,7 +47,8 @@ public class MarkLogicInsertUpdateRoleTest {
 		try {
 			URI u = null;
 			// Create Read Only User
-			u = new URI(TestHelper.XCC_FULL_ACCESS_USER_LOCALHOST_8020);
+			u = new URI(TestHelper.XCC_FULL_ACCESS_USER_LOCALHOST);
+			System.out.println(u.toString());
 			cs_ins_upd = ContentSourceFactory.newContentSource(u);
 		} catch (XccConfigException e) {
 			LOG.error(e);
@@ -120,9 +121,8 @@ public class MarkLogicInsertUpdateRoleTest {
 	}
 
 	@Test
-	public void testFirstDocHasOnlyOnePermission() throws Exception {
-		// At this stage, we've only applied one permission - check for this to
-		// confirm, then add others..
+	public void testFirstDocsContainsReadAndUpdatePermissions()
+			throws Exception {
 		Session s = cs_ins_upd.newSession();
 		assertNotNull(s);
 		assertNotNull(s.getCurrentServerPointInTime());
@@ -136,21 +136,49 @@ public class MarkLogicInsertUpdateRoleTest {
 
 		Document d = XMLUnit.buildControlDocument(rs.asString());
 		XMLAssert.assertXpathEvaluatesTo("read",
-				"/sec:permission/sec:capability/text()", d);
-		XMLAssert.assertXpathEvaluatesTo("1", "count(sec:permission)", d);
+				"properties/sec:permission[1]/sec:capability/text()", d);
+		XMLAssert.assertXpathEvaluatesTo("update",
+				"properties/sec:permission[2]/sec:capability/text()", d);
+		XMLAssert.assertXpathEvaluatesTo("2",
+				"count(properties/sec:permission)", d);
 		s.close();
 	}
 
 	@Test
-	public void testAttemptedDocInsertUpdateAndDelete() throws Exception {
+	public void testAttemptedDocInsert() throws Exception {
 		Session s = cs_ins_upd.newSession();
-		Request r = s.newAdhocQuery(TestHelper.DOC_INSERT_QUERY);
-		s.submitRequest(r);
+		Request r = s.newAdhocQuery(TestHelper.XDMP_DOC_ESTIMATE_QUERY);
+		ResultSequence rs = s.submitRequest(r);
+		assertTrue(
+				"Assert that the initial estimate for the database size did not return an empty sequence",
+				rs.size() > 0);
+		assertEquals(
+				"Assert that the full user can currently see ALL docs in the db",
+				"200", rs.asString());
+		// Insert new doc
+		r = s.newAdhocQuery(TestHelper.DOC_INSERT_QUERY);
+		rs = s.submitRequest(r);
+		s.close();
+
+		// ensure all docs now have permissions
+		TestHelper.addRemainingPermissionsToRemainingDocsAsAdmin();
+
+		s = cs_ins_upd.newSession();
+		r = s.newAdhocQuery(TestHelper.XDMP_DOC_ESTIMATE_QUERY);
+		rs = s.submitRequest(r);
+		assertTrue(
+				"Assert that the initial estimate for the database size did not return an empty sequence",
+				rs.size() > 0);
+		assertEquals(
+				"Assert that the full user can currently see ALL docs in the db",
+				"201", rs.asString());
+
 		// read back the doc
 		r = s.newAdhocQuery(TestHelper.INSERTED_DOC_QUERY);
-		ResultSequence rs = s.submitRequest(r);
+		rs = s.submitRequest(r);
 		assertTrue("Assert that a result was returned from the ad-hoc query",
 				rs.size() > 0);
+
 		Document d = XMLUnit.buildControlDocument(rs.asString());
 		XMLAssert.assertXpathEvaluatesTo("ok", "/test/text()", d);
 		r = s.newAdhocQuery(TestHelper.XDMP_DOC_ESTIMATE_QUERY);
@@ -169,16 +197,32 @@ public class MarkLogicInsertUpdateRoleTest {
 		assertTrue("Assert that a result was returned from the ad-hoc query",
 				rs.size() > 0);
 		d = XMLUnit.buildControlDocument(rs.asString());
-		XMLAssert.assertXpathEvaluatesTo("4",
+		XMLAssert.assertXpathEvaluatesTo("2",
 				"count(properties/sec:permission)", d);
 		XMLAssert.assertXpathEvaluatesTo("read",
 				"properties/sec:permission[1]/sec:capability/text()", d);
-		XMLAssert.assertXpathEvaluatesTo("execute",
-				"properties/sec:permission[2]/sec:capability/text()", d);
-		XMLAssert.assertXpathEvaluatesTo("insert",
-				"properties/sec:permission[3]/sec:capability/text()", d);
 		XMLAssert.assertXpathEvaluatesTo("update",
-				"properties/sec:permission[4]/sec:capability/text()", d);
+				"properties/sec:permission[2]/sec:capability/text()", d);
+		s.close();
+	}
+
+	@Test
+	public void testAttemptedUpdateAndDelete() throws Exception {
+
+		/*
+		 * XMLAssert.assertXpathEvaluatesTo("execute",
+		 * "properties/sec:permission[2]/sec:capability/text()", d);
+		 * XMLAssert.assertXpathEvaluatesTo("insert",
+		 * "properties/sec:permission[3]/sec:capability/text()", d);
+		 * XMLAssert.assertXpathEvaluatesTo("update",
+		 * "properties/sec:permission[4]/sec:capability/text()", d);
+		 */
+		Session s = cs_ins_upd.newSession();
+		// initial document check
+		Request r = s.newAdhocQuery(TestHelper.INSERTED_DOC_QUERY);
+		ResultSequence rs = s.submitRequest(r);
+		Document d = XMLUnit.buildControlDocument(rs.asString());
+		XMLAssert.assertXpathEvaluatesTo("ok", "test/text()", d);
 		// now update the document
 
 		r = s.newAdhocQuery(TestHelper.INSERTED_DOC_UPDATE_QUERY);
@@ -212,6 +256,8 @@ public class MarkLogicInsertUpdateRoleTest {
 		assertEquals(
 				"Assert that the full user can currently see ALL docs in the db",
 				"200", rs.asString());
+
 		s.close();
+
 	}
 }
