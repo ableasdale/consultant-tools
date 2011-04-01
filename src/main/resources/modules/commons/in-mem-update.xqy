@@ -29,7 +29,7 @@ xquery version "1.0";
  : Ported to XQuery version 1.0, November 2008.  Minor patch added Oct 2010.
  : 
  : @author Ryan Grimm (grimm@xqdev.com)
- : @version 0.2
+ : @version 0.3
  :
  :)
 
@@ -148,8 +148,11 @@ declare function mem:_processNode(
     then element { QName(namespace-uri($node), local-name($node)) } {
         for $child in ($node/@*, $node/node())
         return mem:_process($child, $modifierNodes, $newNode, $mode)
-
+    } 
+    else if($node instance of document-node()) 
+    then document {
+        for $child in ($node/@*, $node/node())
+        return mem:_process($child, $modifierNodes, $newNode, $mode)
     }
     else $node
 };
-
