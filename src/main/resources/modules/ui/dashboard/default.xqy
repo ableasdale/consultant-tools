@@ -2,6 +2,29 @@ xquery version "1.0-ml";
 (:~
  : Portlet view (powered by MarkLogic)
  :)
+ 
+ declare function local:portlet-body($content as node()) as element(div){
+    element div {
+        attribute class {"portlet-content"},
+        $content
+    }
+ };
+ 
+ declare function local:portlet-header($name as xs:string){
+    element div {
+        attribute class {"portlet-header"},
+        $name   
+    }
+ };
+ 
+ declare function local:portlet($name as xs:string, $content as node() ){
+    element div {
+        attribute class {"portlet"},
+        local:portlet-header($name),
+        local:portlet-body($content)   
+    }
+ };
+ 
 (xdmp:set-response-content-type("text/html; charset=utf-8"),
 <html>
 <head>  
@@ -15,46 +38,19 @@ xquery version "1.0-ml";
 
 <div class="demo">
     <div class="column">
-        <div class="portlet">
-            <div class="portlet-header">Feeds</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-    
-        <div class="portlet">
-            <div class="portlet-header">News</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
+        { local:portlet("FOO", text{"lorem ipsum..."}) }
+        { local:portlet("BAR", text{"Lorem ipsum dolor sit amet, consectetuer adipiscing elit"}) }  
     </div>
 
     <div class="column">
-        <div class="portlet">
-            <div class="portlet-header">Shopping</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
+        { local:portlet("DOO", text{"lorem ipsum..."}) }
     </div>
 
     <div class="column">
-        <div class="portlet">
-            <div class="portlet-header">Links</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
-        
-        <div class="portlet">
-            <div class="portlet-header">Images</div>
-            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-        </div>
+        { local:portlet("DAH", text{"lorem ipsum..."}) }
+        { local:portlet("BAR", text{"Lorem ipsum dolor sit amet, consectetuer adipiscing elit"}) }
     </div>
 </div>
-        <!--<ul id="column3" class="column">
-            <li class="widget color-orange">  
-                <div class="widget-head">
 
-                    <h3>Author Locations</h3>
-                </div>
-                <div class="widget-content">
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam magna sem, fringilla in, commodo a, rutrum ut, massa. Donec id nibh eu dui auctor tempor. Morbi laoreet eleifend dolor. Suspendisse pede odio, accumsan vitae, auctor non, suscipit at, ipsum. Cras varius sapien vel lectus.</p>
-                </div>
-            </li>            
-        </ul>-->
 </body>
 </html>)
