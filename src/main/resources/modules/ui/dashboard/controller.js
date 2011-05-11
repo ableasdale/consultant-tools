@@ -1,8 +1,17 @@
 $(function() {
 	$(".column").sortable({
+		// cancel: ".portlet-content",
+		opacity: 0.6,
+		revert: true,
+		cursor: "move",
+		handle: ".portlet-header",
 		connectWith : ".column"
 	});
+	
+	// add the move cursor as a visual hint
+	$(".portlet-header").addClass("move");
 
+	/* NOT REQUIRED RIGHT NOW:
 	$(".portlet").addClass(
 			"ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
 			.find(".portlet-header").addClass("ui-widget-header ui-corner-all")
@@ -15,7 +24,7 @@ $(function() {
 						"ui-icon-plusthick");
 				$(this).parents(".portlet:first").find(".portlet-content")
 						.toggle();
-			});
+			}); */
 
-	$(".column").disableSelection();
+	/* $(".column").disableSelection(); */
 });

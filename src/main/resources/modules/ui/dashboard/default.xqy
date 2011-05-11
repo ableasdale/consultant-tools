@@ -1,11 +1,11 @@
 xquery version "1.0-ml";
 (:~
- : Portlet view (powered by MarkLogic)
+ : Example Portlet view (Powered by MarkLogic)
  :)
 declare function local:first-ten-docs() as element(span) {
     element span {
-        (for $doc in doc()[1 to 10]
-        return element p {xdmp:node-uri($doc)})
+        (for $doc at $pos in doc()[1 to 10]
+        return element p {concat($pos,"."), xdmp:node-uri($doc)})
     }
 };
 
@@ -29,7 +29,7 @@ declare function local:portlet-body($content as node()) as element(div){
  declare function local:portlet-header($name as xs:string){
     element div {
         attribute class {"portlet-header"},
-        $name   
+        element h3 {$name}   
     }
  };
  
@@ -45,16 +45,21 @@ declare function local:portlet-body($content as node()) as element(div){
 <html>
 <head>  
     <link href="dashboard.css" rel="stylesheet" type="text/css" />
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <!-- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> -->
     <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js">{" "}</script>
     <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js">{" "}</script>
     <script language="javascript" src="controller.js">{" "}</script>
 </head>
 <body>
 
-<div class="demo">
+<div id="header">
+    <h1>Placeholder for Header</h1>
+</div>
+
+<div id="main">
+
     <div class="column">
-        { local:portlet("Top Ten", local:first-ten-docs()) }
+        { local:portlet("Top Ten Documents", local:first-ten-docs()) }
         { local:portlet("Lorem Ipsum", local:lorem-ipsum()) }  
     </div>
 
@@ -66,7 +71,7 @@ declare function local:portlet-body($content as node()) as element(div){
         { local:portlet("Favourites", local:lorem-ipsum()) }
         { local:portlet("Other Stuff", local:lorem-ipsum()) }
     </div>
+    
 </div>
-
 </body>
 </html>)

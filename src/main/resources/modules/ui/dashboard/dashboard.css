@@ -1,13 +1,56 @@
+/* Basic CSS reset */
+body,img,p,h1,h2,h3,h4,h5,h6,ul,ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: none;
+}
+
+body {
+	font-size: 0.8em;
+	font-family: Arial, Verdana, Sans-Serif;
+	background: #ddd;
+}
+
+#main {
+	width: 100%;
+	margin-left:1em;
+}
+
+#header {
+	width: 100%;
+	height: 120px;
+	background: #bbb;
+	margin-bottom: 1em;
+}
+
+#header h1 {
+	color: #aaa;
+	padding: 1em;
+}
+
+.portlet-header h3 {
+	font-family: 'times new roman', times, serif;
+	font-style: italic;
+	color: orange;
+}
+
+.portlet-header h3, .portlet-content p {
+	padding:0.5em;
+}
+
 .column {
-	width: 170px;
+	width: 33%;
 	float: left;
 	padding-bottom: 100px;
 }
 
 .portlet {
+	background: white;
 	margin: 0 1em 1em 0;
 }
 
+/*
 .portlet-header {
 	margin: 0.3em;
 	padding-bottom: 4px;
@@ -20,138 +63,18 @@
 
 .portlet-content {
 	padding: 0.4em;
-}
+} */
 
 .ui-sortable-placeholder {
-	border: 1px dotted black;
+	border: 3px dashed #bbb;
+	background: #ddd;
 	visibility: visible !important;
-	height: 50px !important;
 }
 
 .ui-sortable-placeholder * {
 	visibility: hidden;
 }
 
-/*
-body,img,p,h1,h2,h3,h4,h5,h6,ul,ol {margin:0; padding:0; list-style:none; border:none;}
-body {font-size:0.8em; font-family:Arial,Verdana,Sans-Serif; background:#ddd;} 
-
-#columns .column {
-    float: left;
-    width: 33.3%;
-
-		min-height: 400px;
-		height: auto !important; 
-		height: 400px;
+.move {
+	cursor:move;
 }
-
-
-
-	#columns #column1 { background: url(img/column-bg-left.png) no-repeat right top; }
-	#columns #column3 { background: url(img/column-bg-right.png) no-repeat left top; }
-	
-#columns #column1 .widget { margin: 30px 35px 0 25px; }
-#columns #column3 .widget { margin: 30px 25px 0 35px; }
-#columns .widget {
-    background:white;
-    margin: 30px 20px 0 20px;
-    padding: 2px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-}
-#columns .widget .widget-head {
-    
-    overflow: hidden;
-    width: 100%;
-    height: 30px;
-    line-height: 30px;
-}
-#columns .widget .widget-head h3 {
-    font-family: 'times new roman', times, serif;
-    font-style: italic;
-    color: orange;
-    padding: 0 5px;
-    float: left;
-}
-#columns .widget .widget-content {
-
-    padding: 0 5px;
-    
-    -moz-border-radius-bottomleft: 2px;
-    -moz-border-radius-bottomright: 2px;
-    -webkit-border-bottom-left-radius: 2px;
-    -webkit-border-bottom-right-radius: 2px;
-    line-height: 1.2em;
-    overflow: hidden;
-}
-#columns .widget .widget-content p {
-    padding: 0.8em 0;
-    border-bottom: 1px solid #000;
-}
-#columns .widget .widget-content img {
-    float: right;
-    margin: 10px;
-    border: 1px solid #000;
-}
-#columns .widget .widget-content pre {
-    padding: 0.5em 5px;
-    font-size: 12px;
-}
-#columns .widget .widget-content ul {
-    padding: 5px 0 5px 20px;
-    list-style: disc;
-}
-#columns .widget .widget-content ul li {padding: 3px 0;}
-#columns .widget .widget-content ul.images {
-    padding: 7px 0 0 0;
-    list-style: none;
-    height: 1%;
-}
-#columns .widget .widget-content ul.images li {
-    display: inline;
-    float: left;
-}
-#columns .widget .widget-content ul.images img {
-    display: inline;
-    float: left;
-    margin: 0 0 7px 7px;
-}
-
-.widget-head a.remove  {
-    float: right;
-    display: inline;
-    background: url(img/buttons.gif) no-repeat -24px 0;
-    width: 14px;
-    height: 14px;
-    margin: 8px 4px 8px 0;
-    text-indent: -9999em;
-    outline: none;
-}
-
-.widget-head a.edit  {
-    float: right;
-    display: inline;
-    background: url(img/buttons.gif) no-repeat;
-    width: 24px;
-    height: 14px;
-    text-indent: -9999em;
-    margin: 8px 4px 8px 4px;
-    outline: none;
-}
-
-.widget-head a.collapse  {
-    float: left;
-    display: inline;
-    background: url(img/buttons.gif) no-repeat -52px 0;
-    width: 14px;
-    height: 14px;
-    text-indent: -9999em;
-    margin: 8px 0 8px 4px;
-    outline: none;
-}
-
-.widget-placeholder { border: 2px dashed #999;}
-#column1 .widget-placeholder { margin: 30px 35px 0 25px; }
-#column2 .widget-placeholder { margin: 30px 20px 0 20px; }
-#column3 .widget-placeholder { margin: 30px 25px 0 35px; }
-*/
