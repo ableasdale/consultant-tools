@@ -5,52 +5,45 @@ xquery version "1.0-ml";
 (xdmp:set-response-content-type("text/html; charset=utf-8"),
 <html>
 <head>  
-  <link href="dashboard.css" rel="stylesheet" type="text/css" />
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js">{" "}</script>
-  <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js">{" "}</script>
-  <script language="javascript" src="controller.js">{" "}</script>
+    <link href="dashboard.css" rel="stylesheet" type="text/css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js">{" "}</script>
+    <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js">{" "}</script>
+    <script language="javascript" src="controller.js">{" "}</script>
 </head>
 <body>
 
 <div class="demo">
-<div class="column">
-
-    <div class="portlet">
-        <div class="portlet-header">Feeds</div>
-        <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-    </div>
+    <div class="column">
+        <div class="portlet">
+            <div class="portlet-header">Feeds</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
     
-    <div class="portlet">
-        <div class="portlet-header">News</div>
-        <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        <div class="portlet">
+            <div class="portlet-header">News</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
     </div>
 
-</div>
-
-<div class="column">
-
-    <div class="portlet">
-        <div class="portlet-header">Shopping</div>
-        <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+    <div class="column">
+        <div class="portlet">
+            <div class="portlet-header">Shopping</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
     </div>
 
-</div>
-
-<div class="column">
-
-    <div class="portlet">
-        <div class="portlet-header">Links</div>
-        <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+    <div class="column">
+        <div class="portlet">
+            <div class="portlet-header">Links</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
+        
+        <div class="portlet">
+            <div class="portlet-header">Images</div>
+            <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+        </div>
     </div>
-    
-    <div class="portlet">
-        <div class="portlet-header">Images</div>
-        <div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-    </div>
-
-</div>
-
 </div>
         <!--<ul id="column3" class="column">
             <li class="widget color-orange">  
@@ -65,5 +58,3 @@ xquery version "1.0-ml";
         </ul>-->
 </body>
 </html>)
-
-(: /*<![CDATA[*/]]> :)
