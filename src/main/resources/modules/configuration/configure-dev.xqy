@@ -27,10 +27,36 @@ declare function local:initial-db-check($dbname as xs:string) as xs:unsignedLong
 
 declare function local:apply-initial-database-settings($databasename as xs:string) {
     let $config := admin:get-configuration()
+    let $config := admin:database-set-fast-case-sensitive-searches($config, xdmp:database($databasename), fn:false())
+    let $config := admin:database-set-word-searches($config, xdmp:database($databasename), fn:true())
+    let $config := admin:database-set-word-positions($config, xdmp:database($databasename), fn:true())
+    let $config := admin:database-set-stemmed-searches($config, xdmp:database($databasename), "decompounding")
+    let $config := admin:database-set-three-character-searches($config, xdmp:database($databasename), fn:true())
+    let $config := admin:database-set-three-character-word-positions($config, xdmp:database($databasename), fn:true())
+    let $config := admin:database-set-element-word-positions($config, xdmp:database($databasename), fn:true())
+    let $config := admin:database-set-trailing-wildcard-searches($config, xdmp:database($databasename), fn:true())
     let $config := admin:database-set-uri-lexicon($config, xdmp:database($databasename), fn:true())
     let $config := admin:database-set-collection-lexicon($config, xdmp:database($databasename), fn:true())
     let $config := admin:database-set-directory-creation($config, xdmp:database($databasename), "manual")
     let $config := admin:database-set-maintain-last-modified($config, xdmp:database($databasename), fn:false())
+    let $config := admin:database-set-element-value-positions($config, xdmp:database($databasename), fn:true())
+    let $config := admin:database-set-attribute-value-positions($config, xdmp:database($databasename), fn:true())
+    return
+    admin:save-configuration($config)
+};
+
+
+declare function local:add-codepoint-word-lexicon($config, $databasename as xs:string){
+    try {
+        admin:database-add-word-lexicon($config, xdmp:database($databasename), admin:database-word-lexicon("http://marklogic.com/collation/codepoint"))
+    } catch ($e) {
+        xdmp:log( concat("Unable to set database word lexicon - it may already exist?: " , $e/*:message/text()) )
+    }
+};
+
+declare function local:apply-codepoint-word-lexicon($databasename){
+    let $config := admin:get-configuration()
+    let $config := local:add-codepoint-word-lexicon($config, $databasename)
     return
     admin:save-configuration($config)
 };
@@ -180,5 +206,8 @@ local:add-indexes($databasename, $indexes),
 local:configure-phrasethroughs(),
 
 (: STEP FIVE - add phrase arounds :)
-local:configure-phrasearounds()
+local:configure-phrasearounds(),
+
+(: STEP SIX - add codepoint word lexicon :)
+local:apply-codepoint-word-lexicon($databasename)
 )
