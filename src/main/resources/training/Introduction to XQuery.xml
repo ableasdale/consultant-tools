@@ -1,0 +1,225 @@
+<export><workspace name="Introduction to XQuery"><query name="XML Datatypes">xquery version "1.0-ml";
+
+declare variable $str as xs:string := "Welcome to XQuery";
+declare variable $date as xs:date := xs:date("1999-01-01");
+declare variable $not-true as xs:boolean := false();
+declare variable $decimal as xs:decimal := 3.14;
+
+element example {
+    element greeting {$str},
+    element date {$date},
+    element date-in-units {
+        element year {year-from-date($date)},
+        element month {month-from-date($date)},
+        element day {day-from-date($date)}
+    },
+    element true {$not-true},
+    element decimal-value {$decimal},
+    element current-dateTime {current-dateTime()},
+    element duration-since-date {xs:dayTimeDuration(current-dateTime() - xs:dateTime($date) )},
+    element date-in-seven-days-time {xs:dateTime(fn:current-dateTime()) + xs:dayTimeDuration('P7D')}
+}
+</query><query name="Element and Att">xquery version "1.0-ml";
+
+element root-node {
+    attribute id {"123"},
+    element name {"XQuery Brown Bag"},
+    element currentdateTime { attribute year-from-dateTime {year-from-dateTime(fn:current-dateTime())}, fn:current-dateTime()},
+    element element-with-child-elements {
+        element first-child {},
+        element second-child {
+            element first-child-of-second-child {}
+        }
+    },
+    &lt;you-can-also-declare-elements&gt;like this&lt;/you-can-also-declare-elements&gt;
+}
+
+</query><query name="Predicates">xquery version "1.0-ml";
+(: first 5 docs 
+doc()[1 to 5] :)
+(: predicates with XPath axis 
+doc()[1 to 20]//sec:privilege-id :)
+(:
+doc()//sec:privilege-id[//sec:privilege-name/text() eq 'grant-all-roles'] :)
+
+(:
+base-uri(doc()[1]//sec:kind[. ne 'execute']) :)
+
+(: doc()//sec:kind[. ne 'execute'] :)
+
+(: doc()//sec:action[//sec:role-id/text() eq '12859270053073389585']/text() :)
+
+count(doc()//sec:action[//sec:role-id/text() eq '12859270053073389585']/text())
+
+</query><query name="Sequences">(: No root element required - Invalid XML! :)
+(: 
+  element a {},
+  element b {},
+  element c {}
+:)
+
+(
+element p {
+fn:current-dateTime(),
+element br {},
+xdmp:estimate(doc())
+}
+)</query><query name="Operators">xquery version "1.0-ml";
+
+declare function get-one-or-more
+</query><query name="Operators">xquery version "1.0-ml";
+
+(: Valid :)
+declare variable $pubs as element(Publisher)+ := 
+(&lt;Publisher/&gt;,&lt;Publisher/&gt;);
+
+(: Invalid coercion: as element(Publisher)
+declare variable $pubs2 as element(Publisher)+ := &lt;NotAPublisher/&gt;;
+:)
+
+(: Valid :)
+declare variable $pubs3 as element(Publisher)? := ();
+
+(: Invalid coercion: (, ) as element(Publisher)?
+declare variable $pubs4 as element(Publisher)? := (&lt;Publisher/&gt;,&lt;Publisher/&gt;);
+:)
+
+(: Valid 
+declare variable $pubs5 as element(Publisher)* := ();
+:)
+
+(: Valid :)
+declare variable $pubs6 as element(Publisher)* := (&lt;Publisher/&gt;,&lt;Publisher/&gt;);
+
+$pubs6
+</query><query name="FLWOR">xquery version "1.0-ml";
+
+declare namespace qconsole = "http://marklogic.com/appservices/qconsole";
+
+(: Example 1 - Generate tr(s)
+for $doc at $pos in doc()
+return (
+element tr {
+    element td {$pos},
+    element td {base-uri($doc)}
+})
+:)
+
+(: FLWOR without QName decl on namespace (*) 
+for $doc in doc()
+where $doc//*:query/*:name[text() eq "XML Datatypes"]
+return base-uri($doc) :)
+
+(: FLWOR with fully qualified QName
+for $doc in doc()
+where $doc//qconsole:query/qconsole:name[text() eq "XML Datatypes"]
+return base-uri($doc) 
+:)
+
+(: FLWOR with let and orderby :)
+for $doc in doc()[1 to 50]
+let $uri := base-uri($doc)
+where $doc//qconsole:name[. eq "Predicates"]
+order by $doc/qconsole:history/qconsole:id descending
+return element result { concat($uri,"(",$doc/qconsole:history/qconsole:id/text(),")") }
+
+(: FLWOR with cts:search
+for $result in cts:search(
+    doc(),
+    cts:element-value-query(
+        xs:QName("qconsole:name"),
+        "XML Datatypes",
+        "case-insensitive"
+    )
+)
+return base-uri($result)
+:)
+
+
+</query><query name="XQuery Anatomy">xquery version "1.0";
+(: the declaration is part 1 :)
+
+declare namespace qconsole = "http://marklogic.com/appservices/qconsole";
+import module namespace functx = "http://www.functx.com" at "/MarkLogic/functx/functx-1.0-nodoc-2007-01.xqy";
+(: the namespace declarations are part 2 :)
+
+declare variable $PI as xs:decimal := 3.14;
+
+declare function local:two-times-pi() as xs:decimal {
+    2 * $PI
+};
+(: variable and function declarations are part 3 :)
+
+element numbers {
+    element pi {$PI},
+    element two-times-pi {local:two-times-pi()}
+}
+(: the main section is part 4 :)
+</query><query name="UsingLibraryMod">xquery version "1.0-ml";
+
+import module namespace functx = "http://www.functx.com" at "/MarkLogic/functx/functx-1.0-nodoc-2007-01.xqy";
+
+declare function local:ordinal($i as xs:integer) as element(ordinal) {
+    element ordinal {functx:ordinal-number-en($i)}
+};
+
+(: main :)
+
+element ordinals {
+(
+    local:ordinal(1),local:ordinal(2)
+)
+}
+
+</query><query name="RSSApp">xquery version "1.0-ml";
+
+declare function local:get-rss-feed() as element(rss)? {
+    xdmp:document-get("http://feeds.bbci.co.uk/news/technology/rss.xml")/rss
+};
+
+declare function local:parse-channel($channel as element(channel)?) {
+   element div {
+       attribute id {"header"},
+       element h1 {$channel/title/text()},
+       element p {$channel/description/text()},
+       element div {
+           attribute id {"main"},
+           for $item in $channel/item
+           return local:parse-item($item)
+       }
+   }
+};
+
+declare function local:parse-item($item as element(item)?){
+    element div {
+        attribute class {"item"},
+        element h2 {$item/title/text()},
+        element p {
+            attribute class {"description"},
+            $item/description/text()
+        },
+        element p {
+            attribute class {"date"},
+            $item/pubDate/text()        
+        }
+    }
+};
+
+(: MAIN ONE 
+local:parse-channel(local:get-rss-feed()/channel)
+:)
+
+(: MAIN TWO :)
+(xdmp:set-response-content-type("text/html; charset=utf-8"),
+element html {
+    attribute xmlns {"http://www.w3.org/1999/xhtml"},
+    element head {
+        element title {"RSS Reader"}
+    },
+    element body {
+        local:parse-channel(local:get-rss-feed()/channel)
+    }
+}) 
+</query><query name="Query 1">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+&lt;p&gt;hello world&lt;/p&gt;</query></workspace></export>
