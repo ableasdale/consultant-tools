@@ -19,6 +19,14 @@
 
 	<repositories>
 		<repository>
+			<id>Main</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>Main2</id>
+			<url>http://repo2.maven.org/maven2/</url>
+		</repository>
+		<repository>
 			<id>mvn-repo</id>
 			<url>https://github.com/ableasdale/mvn-repo/raw/master/internal</url>
 		</repository>
@@ -29,7 +37,11 @@
 		<repository>
 			<id>JBOSS</id>
 			<name>JBoss Repository</name>
-			<url>http://repository.jboss.org/maven2/</url>
+			<url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+		</repository>
+		<repository>
+			<id>UK Maven Repo</id>
+			<url>http://uk.maven.org/maven2</url>
 		</repository>
 		<repository>
 			<id>maven2-repository.dev.java.net</id>
@@ -52,7 +64,7 @@
 		<dependency>
 			<groupId>com.marklogic</groupId>
 			<artifactId>marklogic-xcc</artifactId>
-			<version>4.2.1</version>
+			<version>4.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>xom</groupId>
@@ -78,6 +90,11 @@
 			<groupId>nux</groupId>
 			<artifactId>nux</artifactId>
 			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.saxon</groupId>
